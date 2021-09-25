@@ -12,59 +12,99 @@ import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView txtCounter;
-    private Button buttonPlus;
-    private Button buttonMinus;
-    private int counter;
-
-    private View.OnClickListener clickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view){
-            switch (view.getId()) {
-                case R.id.ButtonPlus :
-                    counterPlus();
-                    break;
-                case R.id.ButtonMinus :
-                    counterMinus();
-                    break;
-
-            }
-            if (counter > 0) {
-                txtCounter.setTextColor(Color.GREEN);
-            }
-            else if (counter < 0) {
-                txtCounter.setTextColor(Color.RED);
-            } else {
-                txtCounter.setTextColor(Color.BLUE);
-            }
-        }
-    };
+    private TextView textView;
+    private Button BtnPlus;
+    private Button BtnMin;
+    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        txtCounter = (TextView) findViewById(R.id.Counter);
-        buttonPlus = (Button) findViewById(R.id.ButtonPlus);
-        buttonPlus.setOnClickListener(clickListener);
-        buttonMinus = (Button) findViewById(R.id.ButtonMinus);
-        buttonMinus.setOnClickListener(clickListener);
-        txtCounter = (TextView) findViewById(R.id.Counter);
-        counterUpdate();
+
+        textView = findViewById(R.id.ClickCounter);
+        BtnPlus = findViewById(R.id.BtnPlus);
+        BtnMin = findViewById(R.id.BtnMin);
+        textView.setOnClickListener(clickListener);
+        BtnPlus.setOnClickListener(clickListener);
+        BtnMin.setOnClickListener(clickListener);
 
     }
+
+    private View.OnClickListener clickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()){
+                case R.id.BtnPlus : plus();
+                break;
+                case R.id.BtnMin : min();
+                break;
+            }
+
+            counterUpdate();
+            reset();
+            prime(count);
+        }
+    };
+
     private void counterUpdate() {
-        counter = 0;
-        txtCounter.setText(counter + "");
-    }
-    private void counterPlus() {
-        counter++;
-        txtCounter.setText(counter + "");
-    }
-    private void counterMinus() {
-        counter--;
-        txtCounter.setText(counter+"");
+        if (count == 0) {
+            textView.setTextColor(Color.BLUE);
+        }
+        if (count < 0) {
+            textView.setTextColor(Color.RED);
+        }
+        if (count > 0) {
+            textView.setTextColor(Color.GREEN);
+        }
     }
 
+    private void plus(){
+        count++;
+        textView.setText(count + "");
+    }
 
+    private void min(){
+        count--;
+        textView.setText(count + "");
+    }
+
+    private void reset(){
+        textView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                count = 0;
+                textView.setText(Integer.toString(count));
+                counterUpdate();
+                return true;
+            }
+        });
+    }
+
+    private void prime(int count){
+        int a = 0;
+        if(count == 0 || count == 1){
+
+        } else {
+            for(int i = 1; i <= count/2; i++){
+                if(count % i == 0){
+                    a++;
+                }
+            }
+            if(a > 1){
+
+            }else {
+                textView.setTextColor(Color.parseColor("#FFFFFF"));
+            }
+        }
+    }
+
+    protected void onSaveInstanceState(Bundle outState){
+        super.onSaveInstanceState(outState);
+        outState.putString("0", (String)textView.getText());
+    }
+    protected void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+        textView.setText(savedInstanceState.getString("0"));
+    }
 }

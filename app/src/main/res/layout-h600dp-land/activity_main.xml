@@ -17,15 +17,19 @@
         android:text="0"
         android:layout_centerInParent="true"
         android:textSize="30sp"
-        android:textColor="#0027FF" />
+        android:textColor="#0027FF"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        />
+
     <Button
         android:id="@+id/BtnPlus"
-        android:text="+"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/ClickCounter"
+        android:layout_toRightOf="@+id/ClickCounter"
         android:backgroundTint="@color/colorPrimary"
-        android:layout_above="@+id/ClickCounter"
+        android:text="+"
         android:textColor="#FFF"
         />
 
@@ -34,9 +38,9 @@
         android:text="-"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_alignBottom="@+id/ClickCounter"
+        android:layout_toLeftOf="@+id/ClickCounter"
         android:backgroundTint="@color/colorPrimary"
-        android:layout_below="@+id/ClickCounter"
         android:textColor="#FFF"
         />
 
